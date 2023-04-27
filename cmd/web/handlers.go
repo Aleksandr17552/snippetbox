@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"strconv"
 )
@@ -22,25 +21,16 @@ func showSnippet(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	fmt.Fprintf(w, "Отображение выбранной заметки с ID %d...", id)
+
+	fmt.Fprintf(w, "Отображение определенной заметки с ID %d...", id)
 }
 
 func createSnippet(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		w.Header().Set("Allow", http.MethodPost)
-		http.Error(w, "Метод запрещен!", http.StatusMethodNotAllowed)
+		http.Error(w, "Метод не дозволен", 405)
 		return
 	}
+
 	w.Write([]byte("Создание новой заметки..."))
-}
-
-func main() {
-	max := http.NewServeMux()
-	max.HandleFunc("/", home)
-	max.HandleFunc("/snippet", showSnippet)
-	max.HandleFunc("/snippet/create", createSnippet)
-
-	log.Println("Запуск веб-сервера на http://127.0.0.1:4000")
-	err := http.ListenAndServe(":4000", max)
-	log.Fatal(err)
 }
