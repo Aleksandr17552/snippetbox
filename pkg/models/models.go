@@ -10,7 +10,7 @@ var ErrNoRecord = errors.New("models: подходящей записи не н�
 type Snippet struct {
 	ID      int
 	Title   string
-	Context string
+	Content string
 	Created time.Time
 	Expires time.Time
 }
